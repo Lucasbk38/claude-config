@@ -42,7 +42,7 @@ until_reset() {
 
 usage() { # label pct reset
   printf "$sep"' %s \033[38;5;%sm%.0f%%\033[0m' "$1" "$(pct_color "$2")" "$2"
-  [ -n "$3" ] && r=$(until_reset "$3") && [ -n "$r" ] && printf ' \033[38;5;244m↻%s\033[0m' "$r"
+  [ -n "$3" ] && r=$(until_reset "$3") && [ -n "$r" ] && printf ' \033[38;5;244m↻ %s\033[0m' "$r"
 }
 
 printf '\033[38;5;208m\357\201\273 %s\033[0m' "$dir"
@@ -50,9 +50,11 @@ printf '\033[38;5;208m\357\201\273 %s\033[0m' "$dir"
 printf "$sep"' \033[38;5;%sm%s %s\033[0m' "${mc%% *}" "${mc#* }" "$model"
 [ -n "$effort" ] && printf ' \033[38;5;%sm%s %s\033[0m' "${ec%% *}" "${ec#* }" "$effort"
 if [ -n "$used" ]; then
+  [ "${used%.*}" = 0 ] && [ "${ctx_tokens:-0}" = 0 ] && { printf "$sep"' ctx \033[38;5;244m–\033[0m'; } || {
   printf "$sep"' ctx \033[38;5;%sm%.0f%%\033[0m' "$(pct_color "$used")" "$used"
   # same blue/purple as the token counts in /context
   [ -n "$ctx_tokens" ] && printf ' \033[38;5;147m%s\033[0m' "$(tokens "$ctx_tokens")"
+  }
 fi
 [ -n "$five" ] && usage 5h "$five" "$five_reset"
 [ -n "$week" ] && usage wk "$week" "$week_reset"
