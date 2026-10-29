@@ -42,7 +42,7 @@ until_reset() {
 
 usage() { # label pct reset
   printf "$sep"' %s \033[38;5;%sm%.0f%%\033[0m' "$1" "$(pct_color "$2")" "$2"
-  [ -n "$3" ] && r=$(until_reset "$3") && [ -n "$r" ] && printf ' \033[38;5;244m↻ %s\033[0m' "$r"
+  [ -n "$3" ] && r=$(until_reset "$3") && [ -n "$r" ] && printf ' \033[38;5;244m󰑓 %s\033[0m' "$r"
 }
 
 printf '\033[38;5;208m\357\201\273 %s\033[0m' "$dir"
