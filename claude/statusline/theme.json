@@ -1,0 +1,50 @@
+{
+  "models": {
+    "opus": {
+      "color": 170,
+      "icon": "󰧑"
+    },
+    "sonnet": {
+      "color": 39,
+      "icon": "󰚩"
+    },
+    "haiku": {
+      "color": 114,
+      "icon": "󰛓"
+    },
+    "fable": {
+      "color": 220,
+      "icon": "󰙴"
+    },
+    "other": {
+      "color": 245,
+      "icon": "󱙺"
+    }
+  },
+  "efforts": {
+    "default": {
+      "color": 240,
+      "icon": "󰡵"
+    },
+    "low": {
+      "color": 109,
+      "icon": "󰡳"
+    },
+    "medium": {
+      "color": 186,
+      "icon": "󰾆"
+    },
+    "high": {
+      "color": 215,
+      "icon": "󰾅"
+    },
+    "xhigh": {
+      "color": 209,
+      "icon": "󰓅"
+    },
+    "max": {
+      "color": 196,
+      "icon": "󰈸"
+    }
+  }
+}
