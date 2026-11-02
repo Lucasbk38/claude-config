@@ -13,6 +13,8 @@ week=$(echo "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')
 week_reset=$(echo "$input" | jq -r '.rate_limits.seven_day.resets_at // empty')
 dir=$(echo "$cwd" | sed "s|^$HOME|~|")
 branch=$(git -C "$cwd" --no-optional-locks symbolic-ref --short HEAD 2>/dev/null)
+repo=$(git -C "$cwd" --no-optional-locks rev-parse --show-toplevel 2>/dev/null)
+repo=${repo##*/}
 # model + effort colors and icons from the shared theme
 model_id=$(echo "$input" | jq -r ".model.id // .model.display_name // empty")
 mc=$(jq -r --arg id "$model_id" ".models[(\$id | ascii_downcase | first((\"opus\", \"sonnet\", \"haiku\", \"fable\") as \$f | select(test(\$f)) | \$f) // \"other\")] | \"\\(.color) \\(.icon)\"" ~/.claude/statusline/theme.json)
@@ -46,6 +48,7 @@ usage() { # label pct reset
 }
 
 printf '\033[38;5;208m\357\201\273 %s\033[0m' "$dir"
+[ -n "$repo" ] && printf ' \033[38;5;80m\357\220\201 %s\033[0m' "$repo"
 [ -n "$branch" ] && printf ' \033[38;5;179m\356\202\240 %s\033[0m' "$branch"
 printf "$sep"' \033[38;5;%sm%s %s\033[0m' "${mc%% *}" "${mc#* }" "$model"
 [ -n "$effort" ] && printf ' \033[38;5;%sm%s %s\033[0m' "${ec%% *}" "${ec#* }" "$effort"
