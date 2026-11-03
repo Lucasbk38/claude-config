@@ -1,3 +1,8 @@
+# Agent wiki (read first, every session)
+At startup, read `~/.claude/wiki/INDEX.md`. It is the shared memory of all my agents: its architecture, my preferences (`preferences.md`), the list of agents and what they did (`agents.json`, query it with jq), machine facts and one page per project.
+Load only what the task needs. Keep the wiki up to date as INDEX.md describes: your `agents.json` entry (name, project, current_task, summary), project pages, new preferences, machine changes.
+To route a prompt to the right agent, or to see who is working on what: `/dispatch`.
+
 # graphify
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
 When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.

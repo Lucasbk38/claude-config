@@ -15,6 +15,11 @@ backup "$DEST/statusline";       mkdir -p "$DEST/statusline" && cp "$HERE"/claud
 [ -f "$DEST/statusline/agent-parents.json" ] || echo '{}' > "$DEST/statusline/agent-parents.json"
 mkdir -p "$DEST/skills" && cp -R "$HERE"/claude/skills/* "$DEST/skills/"
 
+# agent wiki: a live symlink, so agents edit the repo copy directly (the SessionEnd hook commits and pushes it)
+[ -e "$DEST/wiki" ] && [ ! -L "$DEST/wiki" ] && mv "$DEST/wiki" "$DEST/wiki.bak"
+ln -sfn "$HERE/wiki" "$DEST/wiki"
+[ -s "$HERE/wiki/agents.json" ] || echo '{}' > "$HERE/wiki/agents.json"
+
 [ -f "$DEST/settings.json" ] || echo '{}' > "$DEST/settings.json"
 backup "$DEST/settings.json"
 jq -s '.[0] * .[1]' "$DEST/settings.json.bak" "$HERE/claude/settings.json" > "$DEST/settings.json"
