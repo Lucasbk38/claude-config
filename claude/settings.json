@@ -8,7 +8,8 @@
   "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "sh ~/.claude/statusline/statusline.sh"
+    "command": "sh ~/.claude/statusline/statusline.sh",
+    "refreshInterval": 2
   },
   "subagentStatusLine": {
     "type": "command",
@@ -46,7 +47,8 @@
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-sonnet-5": {
-      "effortLevel": "high"
+      "effortLevel": "high",
+      "autoCompactWindow": 300000
     },
     "claude-opus-5": {
       "effortLevel": "medium"
@@ -61,5 +63,91 @@
   "preferredNotifChannel": "auto",
   "terminalProgressBarEnabled": true,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/register.sh start",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/title.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/register.sh end",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/wait-clear.sh all",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/stop.sh",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/wait-clear.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "SendMessage",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/wait.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh ~/.claude/wiki/bin/title.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "remoteControlAtStartup": true
 }

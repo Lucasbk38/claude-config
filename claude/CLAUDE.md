@@ -1,7 +1,8 @@
 # Agent wiki (read first, every session)
-At startup, read `~/.claude/wiki/INDEX.md`. It is the shared memory of all my agents: its architecture, my preferences (`preferences.md`), the list of agents and what they did (`agents.json`, query it with jq), machine facts and one page per project.
-Load only what the task needs. Keep the wiki up to date as INDEX.md describes: your `agents.json` entry (name, project, current_task, summary), project pages, new preferences, machine changes.
+At startup, read `~/.claude/wiki/INDEX.md`. It is the shared memory of all my agents: its architecture, my preferences (`preferences.md`), the list of agents and what they did (`agents.json`: never read the whole file, only query the fields you need with jq/rg), machine facts and one page per project.
+Load only what the task needs. Update the wiki when you judge it necessary (nothing forces you; skip it for trivial sessions), as INDEX.md describes: your `agents.json` entry (name, project, current_task, summary), project pages, new preferences, machine changes.
 To route a prompt to the right agent, or to see who is working on what: `/dispatch`.
+End turns honestly: when a task is done, end with the result, not a question (a trailing question or "want me to…?" marks the session *needs input* on the home page). Ask only when really blocked, but never hide a real blocker (a command only I can run, an approval, a decision): end with that explicit request so the session shows *needs input*. Keep `name` (theme) and `current_task` (last task) current in agents.json, because they make up the session title.
 
 # graphify
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
