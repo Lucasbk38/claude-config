@@ -15,10 +15,12 @@ backup "$DEST/statusline";       mkdir -p "$DEST/statusline" && cp "$HERE"/claud
 [ -f "$DEST/statusline/agent-parents.json" ] || echo '{}' > "$DEST/statusline/agent-parents.json"
 mkdir -p "$DEST/skills" && cp -R "$HERE"/claude/skills/* "$DEST/skills/"
 
-# agent wiki: a live symlink, so agents edit the repo copy directly (the SessionEnd hook commits and pushes it)
+# agent wiki: lives in its own private repo (Lucasbk38/claude-wiki), symlinked so agents edit it directly
+# (the SessionEnd hook commits and pushes it). The hooks in settings.json run its bin/ scripts.
+WIKI="$HOME/dev/claude-wiki"
+[ -d "$WIKI" ] || gh repo clone Lucasbk38/claude-wiki "$WIKI" 2>/dev/null || echo "Wiki repo not cloned (it is private): the wiki hooks in settings.json will do nothing until $WIKI exists."
 [ -e "$DEST/wiki" ] && [ ! -L "$DEST/wiki" ] && mv "$DEST/wiki" "$DEST/wiki.bak"
-ln -sfn "$HERE/wiki" "$DEST/wiki"
-[ -s "$HERE/wiki/agents.json" ] || echo '{}' > "$HERE/wiki/agents.json"
+[ -d "$WIKI" ] && ln -sfn "$WIKI" "$DEST/wiki"
 
 [ -f "$DEST/settings.json" ] || echo '{}' > "$DEST/settings.json"
 backup "$DEST/settings.json"
